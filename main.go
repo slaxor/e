@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
+	"path/filepath"
 	"strings"
 
 	"github.com/neovim/go-client/nvim"
@@ -54,9 +55,15 @@ func nvimListenAddress() string {
 }
 
 func sanitizeFileNames(fnames []string) {
+	var err error
 	for i := range fnames {
+		fnames[i], err = filepath.Abs(fnames[i])
+		if err != nil {
+			logger.Error(err)
+		}
 		fnames[i] = strings.ReplaceAll(fnames[i], "|", "")
 		fnames[i] = strings.ReplaceAll(fnames[i], "!", "")
+
 	}
 }
 

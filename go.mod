@@ -1,4 +1,4 @@
-module main
+module github.com/slaxor/editor
 
 go 1.18
 
